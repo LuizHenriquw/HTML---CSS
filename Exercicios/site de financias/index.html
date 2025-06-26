@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Organizador Salarial - Tema Escuro Animado</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: float 30s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0) scale(1); }
+      50% { transform: translateY(-200px) translateX(100px) scale(1.5); }
+      100% { transform: translateY(0) translateX(0) scale(1); }
+    }
+    h1, h2 {
+      color: #bb86fc;
+      text-shadow: 1px 1px 2px #000;
+      position: relative;
+      z-index: 1;
+    }
+    input, select, button, textarea {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      background: #1e1e1e;
+      color: #e0e0e0;
+      position: relative;
+      z-index: 1;
+    }
+    input:focus, textarea:focus, select:focus { outline: 2px solid #bb86fc; }
+    button {
+      background-color: #bb86fc;
+      color: #121212;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    button:hover { background-color: #9a67ea; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+    th { background-color: #333; color: #bb86fc; }
+    #total-saldo, canvas {
+      background: #1e1e1e;
+      border-radius: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    #total-saldo { padding: 10px; font-weight: bold; }
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 30px 0;
+      position: relative;
+      z-index: 1;
+    }
+    #grafico, #graficoMeta {
+      width: 100% !important;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-circle" style="width:200px; height:200px; background: #bb86fc; top: 10%; left: 20%; animation-duration: 40s;"></div>
+  <div class="bg-circle" style="width:300px; height:300px; background: #3700b3; top: 50%; left: 70%; animation-duration: 50s; animation-delay: 10s;"></div>
+  <div class="bg-circle" style="width:150px; height:150px; background: #03dac6; top: 70%; left: 30%; animation-duration: 35s; animation-delay: 5s;"></div>
+  <div class="bg-circle" style="width:250px; height:250px; background: #6200ea; top: 30%; left: 80%; animation-duration: 45s; animation-delay: 15s;"></div>
+
+  <main>
+    <h1>Organizador Salarial</h1>
+    <label for="salario">Média Salarial (R$):</label>
+    <input type="number" id="salario" placeholder="Digite sua média salarial" onchange="salvarSalario()">
+    <label for="descricao">Descrição do Gasto:</label>
+    <input type="text" id="descricao" placeholder="Ex: Almoço, Hotel, Uber">
+    <label for="categoria">Categoria:</label>
+    <input type="text" id="categoria" placeholder="Ex: Alimentação, Viagem">
+    <label for="valor">Valor (R$):</label>
+    <input type="number" id="valor" placeholder="Digite o valor do gasto">
+    <label for="periodo">Período (Ex: Mai/2025):</label>
+    <input type="text" id="periodo" placeholder="Ex: Mai/2025">
+    <button onclick="adicionarGasto()">Adicionar Gasto</button>
+    <button onclick="limparDados()">Limpar Todos os Dados</button>
+    <label for="filtro">Filtrar por Categoria:</label>
+    <input type="text" id="filtro" oninput="atualizarTabela()" placeholder="Ex: Alimentação">
+    <table>
+      <thead>
+        <tr><th>Descrição</th><th>Categoria</th><th>Valor (R$)</th><th>Período</th></tr>
+      </thead>
+      <tbody id="tabela-gastos"></tbody>
+    </table>
+    <div id="total-saldo"></div>
+    <canvas id="grafico"></canvas>
+    <hr>
+    <h2>💰 Meta de Poupança</h2>
+    <label for="meta">Valor da Meta (R$):</label>
+    <input type="number" id="meta" placeholder="Ex: 5000" onchange="salvarMeta()">
+    <label for="poupanca">Valor Guardado (R$):</label>
+    <input type="number" id="poupanca" placeholder="Ex: 1200" onchange="salvarPoupanca()">
+    <canvas id="graficoMeta"></canvas>
+    <hr>
+    <h2>🔁 Exportar/Importar Dados</h2>
+    <button onclick="exportarDados()">Exportar Dados</button>
+    <input type="file" id="importarArquivo" onchange="importarDados(event)">
+  </main>
+
+  <script>
+    let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
+    document.getElementById('salario').value = localStorage.getItem('salario') || '';
+    document.getElementById('meta').value = localStorage.getItem('meta') || '';
+    document.getElementById('poupanca').value = localStorage.getItem('poupanca') || '';
+    function salvarSalario(){ localStorage.setItem('salario', document.getElementById('salario').value); atualizarTabela(); }
+    function salvarMeta(){ localStorage.setItem('meta', document.getElementById('meta').value); atualizarGraficoMeta(); }
+    function salvarPoupanca(){ localStorage.setItem('poupanca', document.getElementById('poupanca').value); atualizarGraficoMeta(); }
+    function adicionarGasto(){ const d=document.getElementById('descricao').value, c=document.getElementById('categoria').value, v=parseFloat(document.getElementById('valor').value), p=document.getElementById('periodo').value||'Sem Período'; if(!d||!c||isNaN(v)){alert('Preencha todos os campos corretamente.');return;} gastos.push({descricao:d,categoria:c,valor:v,periodo:p}); localStorage.setItem('gastos',JSON.stringify(gastos)); atualizarTabela(); atualizarGrafico(); document.getElementById('descricao').value='';document.getElementById('categoria').value='';document.getElementById('valor').value='';document.getElementById('periodo').value=''; }
+    function limparDados(){ if(confirm('Tem certeza que deseja apagar todos os dados?')){ gastos=[]; localStorage.clear(); document.getElementById('salario').value='';document.getElementById('meta').value='';document.getElementById('poupanca').value=''; atualizarTabela(); atualizarGrafico(); atualizarGraficoMeta(); }}
+    function atualizarTabela(){ const f=document.getElementById('filtro').value.toLowerCase(), tbody=document.getElementById('tabela-gastos');tbody.innerHTML=''; let total=0; gastos.forEach(g=>{ if(!f||g.categoria.toLowerCase().includes(f)){ tbody.innerHTML+=`<tr><td>${g.descricao}</td><td>${g.categoria}</td><td>${g.valor.toFixed(2)}</td><td>${g.periodo}</td></tr>`; total+=g.valor; }}); const s=parseFloat(document.getElementById('salario').value), saldo=s? (s-total).toFixed(2):'N/A'; document.getElementById('total-saldo').innerText=`Total de Gastos: R$${total.toFixed(2)} | Saldo: R$${saldo}`; }
+    function atualizarGrafico(){ const cat={}, labels=[], data=[]; gastos.forEach(g=>{cat[g.categoria]=(cat[g.categoria]||0)+g.valor}); for(let k in cat){ labels.push(k); data.push(cat[k]); } if(window.grafico)window.grafico.destroy(); window.grafico=new Chart(document.getElementById('grafico').getContext('2d'),{type:'pie',data:{labels,datasets:[{data}]},options:{responsive:true}}); }
+    function atualizarGraficoMeta(){ const m=parseFloat(document.getElementById('meta').value)||0, p=parseFloat(document.getElementById('poupanca').value)||0, rest=Math.max(0,m-p); if(window.graficoMeta)window.graficoMeta.destroy(); window.graficoMeta=new Chart(document.getElementById('graficoMeta').getContext('2d'),{type:'doughnut',data:{labels:['Guardado','Faltando'],datasets:[{data:[p,rest]}]},options:{responsive:true}}); }
+    function exportarDados(){ const d={gastos,salario:document.getElementById('salario').value,meta:document.getElementById('meta').value,poupanca:document.getElementById('poupanca').value}, b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='dados_organizador.json';a.click();URL.revokeObjectURL(u);}    
+    function importarDados(e){const f=e.target.files[0],r=new FileReader();r.onload=function(ev){const d=JSON.parse(ev.target.result);gastos=d.gastos||[];localStorage.setItem('gastos',JSON.stringify(gastos));localStorage.setItem('salario',d.salario||'');localStorage.setItem('meta',d.meta||'');localStorage.setItem('poupanca',d.poupanca||'');document.getElementById('salario').value=d.salario||'';document.getElementById('meta').value=d.meta||'';document.getElementById('poupanca').value=d.poupanca||'';atualizarTabela();atualizarGrafico();atualizarGraficoMeta();};r.readAsText(f);}    
+    atualizarTabela();atualizarGrafico();atualizarGraficoMeta();
+  </script>
+</body>
+</html>

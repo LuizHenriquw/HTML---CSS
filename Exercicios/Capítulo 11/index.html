@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capitulo 11</title>
+</head>
+<body>
+    <h1>Vizualizando imagens em diversos dispositivos</h1>
+    <P>Tentando fazar que as imagens desse site abre em diversos dispositivos diferentes ou apenas aumente e diminuia as imagens.</P>
+
+    <picture>
+        <source media="(max-width:750px )" srcset="Imagens/P.png" type="image/png">
+        <source media="(max-width:1050px )" srcset="Imagens/M.png" type="image/png">
+        <img src="Imagens/G.png" alt="imagem personalizada"> 
+    </picture>
+
+
+    <H1>Colando áudio no site </H1>
+    <audio controls preload="metadata">
+       <source src="audios/Cartier - Anno Domini Beats.mp3" type="audio/mpeg">
+        
+    </audio>
+    
+    <h1>Colando vídeos no site</h1>
+        <video controls width="700" poster="Imagens/20240423-ovicio-gta-trevor.png">
+            <source src="videos/Grand Theft Auto V 2024-05-24 00-27-10.mp4" type="video/mp4">
+
+        </video>
+
+    <H1>Icorporando vídeo sem ser hospedagem no site</H1> ,
+      <iframe width="700" height="315" src="https://www.youtube.com/embed/uK3-1GdfkIU?si=KRNzxV0q3p06Goya&amp;start=61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+</body>
+</html>
