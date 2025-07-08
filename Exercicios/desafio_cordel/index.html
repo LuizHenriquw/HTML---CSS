@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Cordel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
         body{
             margin:0px ;
@@ -13,10 +17,6 @@
             background-color:black ;
             padding: 50px;
             text-align: center;
-        
-        }
-        a:{
-            
         }
 
         header > p >  a{
@@ -27,28 +27,54 @@
 
         header > h1{
             color:white;
-        }
-                
+            font-family: "passion", sans-serif;
+        
+        }                
         header > p{
             color: white;
         }    
         
         main > p{
             text-align: left;
-           
-        
-
-        }
-        
-        main{
-            padding: 30px;
-        }
-
-        div{
-            height: 400px;
             
+
+        }
+        
+
+       #imagem1{
+            background-image: url(imagens/background001.jpg);
+            background-position: center right;
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
+       #imagem2{
+            background-image: url(imagens/background002.jpg);
+            background-position: left bottom;
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+       }
+ 
+       
+       
+       
+        div{
+            height: 100vh;
+                  
+        }
+       
+        img{
+           
+        }
+       
+        div > p{
+            background-color: rgba(0, 0, 0, 0.559);
+            color: white;
+            font-size: large;
+            display: inline-block;
+        }
 
 
 
@@ -79,8 +105,8 @@
             Antes que eu caduque <br>
             Vou dizer tudo em poesia.<br> 
         </p>
-        <div style="background-image: url(imagens/background001.jpg);">
-            
+        <div id="imagem1">
+            <p>
                 Não é mais como era antes <br> 
                 É tudo abreviado <br>
                 "Você" só tem duas letras <br> 
@@ -88,7 +114,7 @@
                 Para declarar o amor <br>
                 Basta botar uma flor <br>
                 E um coração desenhado.<br>
-            <p></p>
+            </p>
         </div>
         <p>
             Arroba agora não pesa <br>
@@ -107,8 +133,8 @@
             Pra entender como fica <br>
             Decifre esse rabisco. <br>
         </p>
-        <div>
-            <img src="" alt=""></img> 
+        <div id="imagem2">
+           
             <p>
                 Tenho saudade das cartas <br>
                 Escritas com a própria mão <br>
