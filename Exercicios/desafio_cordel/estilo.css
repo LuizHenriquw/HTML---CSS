@@ -59,16 +59,19 @@
             font-family: var(--fonte3);
             font-size: 3.5vw;
         }
-        
-        section.img > p{
-            background-color: rgba(0, 0, 0, 0.479);
-            width:400px ;
+        section#img{
+            background-color:red
+        }
+        section#img > p{
+            color: white;
+            background-color:rgba(0, 0, 0, 0.437);
+            width:300px ;
             display: inline-block;
         }
 
 
-        .img{
-           
+        #img{
+            box-shadow: inset 6px 6px 13px 0px rgba(0, 0, 0, 0.648);
             font-size: 10px:
             display: inline-block;
         }
