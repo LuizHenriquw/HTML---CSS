@@ -8,18 +8,24 @@
        table{
         width: 500px;
         height: 400px;
-    }
-       
+        border-collapse: collapse;
+      }
+
+       thead{
+        height: 50px;
+       }
        th, td{
             border: 2px solid black;
         }
+      
         th{
-            font-weight: bold;
+            background-color: rgb(148, 154, 154);
         }
         
         td{
             font-family: Arial, Helvetica, sans-serif;
             padding: 10px;
+            background-color: antiquewhite;
         }
     </style>
 
@@ -30,14 +36,14 @@
     <table>
         <thead>
             <tr>
-                <th>Grupos</th>
-                <th>Nomes</th>
-                <th colspan="3">Filmes</th>
+                <th scope="col">Grupos</th>
+                <th scope="col">Nomes</th>
+                <th colspan="3" scope="colgroup">Filmes</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th rowspan="3">Mulheres</th>
+                <th rowspan="3" scope="rowgroup">Mulheres</th>
                 <td>Ana Maria Santos</td>
                 <td>Alien</td>
                 <td>Rambo</td>
@@ -58,7 +64,7 @@
                 <td>Big Hero</td>
             </tr>
             <tr>
-                <th rowspan="3">Homens</th>
+                <th rowspan="3" scope="rowgroup" >Homens</th>
                 <td>Bruno</td>
                 <td>Intocaveis</td>
                 <td>Aminesia</td>
