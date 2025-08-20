@@ -7,9 +7,9 @@
 </head>
 <body>
     <h1>Começando os formulários</h1>
-    <form action="cadasto.php">  
-        <p> <label for="nome">nome: </label><input type="text" name="nome" id="nome"><br></p>
-        <p><label for="idade">idade: </label><input type="text" name="idade" id="idade"><br></p>
+    <form action="cadasto.php" method="post" autocomplete="on">  
+        <p> <label for="nome">nome: </label><input type="text" name="nome" id="nome" required minlength="4" maxlength="5" autocomplete="username"><br></p>
+        <p><label for="idade">idade: </label><input type="text" name="idade" id="idade" required minlength="8"></p>
 
         <input type="submit" value="Enviar">
 
