@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 760px){
     #hamburguer{
         display: none;
     }
@@ -17,3 +17,4 @@
     main{
         width: 768px;
     }
+ }   
