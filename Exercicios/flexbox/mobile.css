@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+
+
+
+header{
+    align-items: center;
+}
+
+nav{
+    flex-flow: column nowrap;
+}
+
+h1{
+    flex-basis: 50px;
+    text-align: center;
+
+
+}
+
+a{
+    width: 90vw;
+    text-align: center;
+}
