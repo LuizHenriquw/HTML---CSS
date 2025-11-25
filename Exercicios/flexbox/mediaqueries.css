@@ -8,14 +8,21 @@
 
 header{
     background-color: grey;
-    height: 70px;
+   
     padding: 10px;
 }
 h1{
     color: white;
     padding-bottom: 10px;
+    flex: 0 0 200px;
      
     
+
+}
+
+nav{
+    display: flex;
+    flex-flow: row wrap;
 
 }
 
@@ -26,6 +33,7 @@ a{
     text-decoration: none;
     border-radius: 6px;
     padding-top: 8px;
+    margin: 5px;
 }
 
 a:hover{
@@ -56,6 +64,3 @@ main{
     align-items: center;
 }
 
-.item{
-
-}
